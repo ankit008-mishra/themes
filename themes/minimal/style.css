@@ -1,5 +1,5 @@
 
-/* 2026-05-21T05-11-04 v1.6.17                      */
+/* 2026-05-25T18-32-30 v1.6.173                     */
 
 /* Install from Theme Marketplace to always have    */ 
 /* the latest version!                              */
@@ -64,10 +64,10 @@
   --blyrics-translated-color: var(--white-dot-60);
 
   /*# SECTION-3.2 ################################# */
-  --blyrics-lyric-scroll-duration: 0.5s; 
-  --blyrics-lyric-scroll-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --blyrics-lyric-scroll-duration: 0.7s; 
+  --blyrics-lyric-scroll-timing-function: var(--transition-curve);
   --lyrics-opacity-transition: opacity
-    calc(var(--blyrics-lyric-scroll-duration) * 0.8)
+    calc(var(--blyrics-lyric-scroll-duration) * 0.75)
     var(--blyrics-lyric-scroll-timing-function);
   --blyrics-scale-transition-duration: var(
     --blyrics-lyric-scroll-duration
@@ -78,7 +78,7 @@
   --blyrics-lyric-highlight-fade-out-duration: var(
     --blyrics-lyric-scroll-duration
   ); 
-  --blyrics-scroll-timing-offset: 0.5s; 
+  --blyrics-scroll-timing-offset: var(--blyrics-lyric-scroll-duration); 
   --blyrics-wobble-duration: 0s;
   --blyrics-timing-offset: 0s;
   --blyrics-richsync-timing-offset: 0s;
@@ -126,7 +126,7 @@ blyrics-disable-richsync = true;
 blyrics-line-synced-animation-delay = 0;
 blyrics-lyric-ending-threshold-s = 0;
 blyrics-early-scroll-consider-s = 0;
-blyrics-queue-scroll-ms = 520;
+blyrics-queue-scroll-ms = 720; 
 blyrics-debug-renderer = false;
 blyrics-target-scroll-pos-ratio = 0.4;
 blyrics-add-extra-top-padding = true;
@@ -239,7 +239,7 @@ ytmusic-app-layout > [slot="player-bar"] {
   .blyrics-container:is(:hover, .blyrics-user-scrolling)
   > div:not(.blyrics--active):not(:hover) {
   opacity: var(--non-hovered-lines-visibility);
-  transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s var(--transition-curve);
 }
 
 /* Specific Line Hover */
@@ -247,7 +247,7 @@ ytmusic-app-layout > [slot="player-bar"] {
   .blyrics-container:is(:hover, .blyrics-user-scrolling)
   > div:not(.blyrics--active):hover {
   opacity: var(--hovered-line-visibility);
-  transition: opacity 0.1s ease-out;
+  transition: opacity 0.1s var(--transition-curve);
 }
 
 /* Unsynced Lyrics */
@@ -301,7 +301,7 @@ ytmusic-app-layout:not([is-mweb-modernization-enabled])
 
 #blyrics-wrapper#blyrics-wrapper > .blyrics-container .blyrics-footer > * {
   opacity: 0.3;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.1s var(--transition-curve);
 }
 
 #blyrics-wrapper#blyrics-wrapper
@@ -340,7 +340,7 @@ ytmusic-app-layout:not([is-mweb-modernization-enabled])
 
 /* # SECTION-7.1 - Loader styles ################## */
 #blyrics-loader:before {
-	animation: blyrics-shimmer 1s infinite alternate var(--transition-curve);
+	animation: blyrics-shimmer 1s infinite alternate ease-in-out;
 }
 
 #blyrics-loader:after {
@@ -353,7 +353,7 @@ ytmusic-app-layout:not([is-mweb-modernization-enabled])
 	-webkit-background-clip: border-box;
 	background-clip: border-box;
 	color: var(--blyrics-ui-text-color);
-	animation: blyrics-shimmer 1s infinite alternate var(--transition-curve);
+	animation: blyrics-shimmer 1s infinite alternate ease-in-out;
 	will-change: auto;
 }
 
@@ -362,8 +362,8 @@ ytmusic-app-layout:not([is-mweb-modernization-enabled])
   display: none !important;
   animation-play-state: paused !important;
   transition:
-    opacity 0.4s ease,
-    transform 0.4s ease,
+    opacity 0.4s var(--transition-curve),
+    transform 0.4s var(--transition-curve),
     display 0.4s allow-discrete 0.8s;
 }
 
@@ -371,8 +371,8 @@ ytmusic-app-layout:not([is-mweb-modernization-enabled])
   animation-play-state: running !important;
   display: flex !important;
   transition:
-    opacity 0.4s ease,
-    transform 0.4s ease,
+    opacity 0.4s var(--transition-curve),
+    transform 0.4s var(--transition-curve),
     display 0s allow-discrete;
 }
 
@@ -382,7 +382,7 @@ ytmusic-app-layout:not([is-mweb-modernization-enabled])
 }
 
 #blyrics-ad-overlay:before {
-  animation: blyrics-shimmer 1s infinite alternate var(--transition-curve);
+  animation: blyrics-shimmer 1s infinite alternate ease-in-out;
 }
 
 #blyrics-ad-overlay:after {
@@ -391,15 +391,15 @@ ytmusic-app-layout:not([is-mweb-modernization-enabled])
   background-clip: border-box;
   color: var(--blyrics-ui-text-color);
   white-space: pre-wrap;
-  animation: blyrics-shimmer 1s infinite alternate var(--transition-curve);
+  animation: blyrics-shimmer 1s infinite alternate ease-in-out;
   will-change: auto;
 }
 
 :has(ytmusic-player-bar[is-advertisement]) #blyrics-ad-overlay {
   display: flex !important;
   transition:
-    opacity 0.4s ease,
-    transform 0.4s ease,
+    opacity 0.4s var(--transition-curve),
+    transform 0.4s var(--transition-curve),
     display 0s allow-discrete;
 }
 
@@ -576,8 +576,8 @@ yt-notification-action-renderer #toast:hover {
   opacity: 1 !important;
   transform: translateY(0) !important;
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease !important;
+    opacity 0.3s var(--transition-curve),
+    transform 0.3s var(--transition-curve) !important;
 }
 
 @keyframes idontwannaseeyouanymore-billie {
@@ -998,7 +998,7 @@ ytmusic-player-page[player-fullscreened]:not([blyrics-video-mode]):not(
 
 ytmusic-player-page[player-fullscreened]:not([blyrics-dfs])
   #blyrics-wrapper:has(.blyrics-container[data-no-lyrics="true"]) {
-    transition: opacity 1.3s ease var(--blyrics-no-lyrics-slide-delay);
+    transition: opacity 1.3s ease-in-out var(--blyrics-no-lyrics-slide-delay);
 }
 
 /* ## SECTION-25 - Music Note Animation disable ### */
@@ -1031,8 +1031,8 @@ ytmusic-player-page[is-mweb-modernization-enabled][player-page-ui-state="PLAYER_
   opacity: 1;
   visibility: visible;
   transition:
-    opacity 0.2s ease-out,
-    visibility 0.2s ease-out !important;
+    opacity 0.2s var(--transition-curve),
+    visibility 0.2s var(--transition-curve) !important;
 }
 
 ytmusic-player-page[is-mweb-modernization-enabled][player-page-ui-state="TABS_VIEW"]
@@ -1056,8 +1056,8 @@ ytmusic-player-page[is-mweb-modernization-enabled][player-page-ui-state="TABS_VI
   opacity: 0;
   visibility: hidden;
   transition:
-    opacity 0.2s ease-out,
-    visibility 0.2s ease-out !important;
+    opacity 0.2s var(--transition-curve),
+    visibility 0.2s var(--transition-curve) !important;
 }
 
 /* ## SECTION-27 - Tab headings animation change ## */
@@ -1199,7 +1199,7 @@ ytmusic-player-page[is-mweb-modernization-enabled]
 
 /* ### Section 30 - Smooth sidebar entry ########## */
 #contentContainer {
-  transition: transform 0.2s ease-out !important;
+  transition: transform 0.2s var(--transition-curve) !important;
 }
 
 tp-yt-paper-item.ytmusic-guide-entry-renderer {
@@ -1229,7 +1229,7 @@ ytmusic-guide-entry-renderer[active] tp-yt-paper-item.ytmusic-guide-entry-render
 /* ### Section 31 - Translation etc entry ######### */
 .blyrics--romanized,
 .blyrics--translated {
-  animation: smoothReveal 0.3s ease backwards;
+  animation: smoothReveal 0.3s var(--transition-curve) backwards;
   overflow: hidden;
   transform-origin: top;
 }
@@ -1350,7 +1350,7 @@ ytmusic-player-bar[is-mweb-player-bar-modernization-enabled]
 
 #av-id ytmusic-av-toggle {
   opacity: 0.6;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s var(--transition-curve);
 }
 
 #av-id ytmusic-av-toggle:hover {
@@ -1364,9 +1364,9 @@ ytmusic-player-bar[is-mweb-player-bar-modernization-enabled]
   margin: 0;
   cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-  transition: all 0.2s ease; /* remove if it causes issues */
+    background-color 0.2s var(--transition-curve),
+    color 0.2s var(--transition-curve);
+  transition: all 0.2s var(--transition-curve); /* remove if it causes issues */
 }
 
 #av-id ytmusic-av-toggle :is(.song-button, .video-button)[aria-pressed="true"] {
