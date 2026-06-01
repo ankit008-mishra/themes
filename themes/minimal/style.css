@@ -1,5 +1,5 @@
 
-/* 2026-05-30T18-22-38 v1.6.174                     */
+/* 2026-06-01T06-12-38 v1.6.175                     */
 
 /* Install from Theme Marketplace to always have    */ 
 /*   the latest version!                            */
@@ -37,7 +37,7 @@
   --whole-website-font-family: "Roboto Flex",
                                 var(--noto-sans-universal), Roboto, sans-serif, system-ui;
   /* Font for everthing, delete above line if you   */
-  /* want to use YT default                         */
+  /*   want to use YT default                         */
   font-family: var(--whole-website-font-family) !important;
   font-optical-sizing: auto;
   scrollbar-width: thin;
@@ -46,12 +46,12 @@
 /* ## SECTION-3 - EASY CHANGE SETTINGS ############ */
 :root {
   /*# SECTION-3.1 ################################# */
-  --current-lyric-visibility: 1;      /* 1 would mean 100%   */
+  --current-lyric-visibility: 1;      /* 1    would mean 100%*/
   --previous-lyrics-visibility: 0.35; /* 0.35 would mean 35% */
   --next-lyrics-visibility: 0.02;     /* 0.02 would mean 2%  */
   --hovered-line-visibility: calc(var(--current-lyric-visibility) * 0.8);
   --non-hovered-lines-visibility: calc(var(--current-lyric-visibility) * 0.5);
-  --translated-lyric-visibility: 0.7; /* also romanized */
+  --translated-lyric-visibility: 0.7;  /*    also romanized  */
   --blyrics-font-family: var(--whole-website-font-family);
   --blyrics-footer-font-family: var(--blyrics-font-family);
   --blyrics-font-weight: 600;
@@ -144,7 +144,7 @@ ytmusic-app-layout > [slot="player-bar"] {
 
 /* ## SECTION-6 - Style and animation of lyrics ### */
 
-/* Override Keyframes */
+/* Eroding Animations */
 @keyframes blyrics-wobble {
   from,
   to {
@@ -422,9 +422,6 @@ ytmusic-player-page::before {
   position: fixed;
   transition: var(--background-image-transition);
   width: 100dvw;
-  /* will-change: background-image, transform;
-  transform: translateZ(0) scale(1.15);
-  backface-visibility: hidden; */
 }
 ytmusic-player-page[is-mweb-modernization-enabled]::before {
   inset: 0;
@@ -518,7 +515,6 @@ ytmusic-app-layout:not([player-ui-state="FULLSCREEN"]) #player-bar-background {
 #player-bar-background {
   overflow: hidden;
   background-color: transparent;
-  /* background: black !important; */
 }
 
 ytmusic-app-layout[player-ui-state="PLAYER_BAR_ONLY"]
@@ -526,7 +522,6 @@ ytmusic-app-layout[player-ui-state="PLAYER_BAR_ONLY"]
   content: "";
   position: absolute;
   inset: -90px;
-  /* background-color: black; */
   background: var(
     --blyrics-background-img,
     var(--ytmusic-brand-background-solid)
@@ -681,93 +676,82 @@ ytmusic-browse-response[has-background]:not([disable-gradient])
 }
 
 /* ## SECTION-17 - Search Box ##################### */
-ytmusic-search-box[is-bauhaus-sidenav-enabled] {
-  --ytmusic-search-border: var(--white-dot-10);
-  --ytmusic-search-background: oklch(from #212121 l c h);
+ytmusic-search-box {
+  &[is-bauhaus-sidenav-enabled] {
+    --ytmusic-search-border: var(--white-dot-10);
+    --ytmusic-search-background: oklch(from #212121 l c h);
 
-  /* Input field — smooth background transition */
-  & .search-box.ytmusic-search-box {
-    transition: background-color 0.2s var(--transition-curve);
-  }
-
-  /* Suggestion list — fade in/out transition */
-  & #suggestion-list {
-    transition-duration: 0.35s;
-    transition-property: opacity;
-    transition-timing-function: var(--transition-curve);
-
-    /* Bottom pill shape when suggestions are visible */
-    &.ytmusic-search-box {
-      border-radius: 0 0 20px 20px;
-      corner-shape: superellipse(2);
-    }
-  }
-
-  /* Closed / collapsed state */
-  &:not([opened]) {
-    /* Pill-shaped outer container */
-    & .search-container.ytmusic-search-box {
-      border-radius: 20px;
-      corner-shape: superellipse(2);
+    & .search-box.ytmusic-search-box {
+      transition: background-color 0.2s var(--transition-curve);
     }
 
-    /* Hide suggestion list when closed */
     & #suggestion-list {
-      opacity: 0;
+      transition-duration: 0.35s;
+      transition-property: opacity;
+      transition-timing-function: var(--transition-curve);
+
+      &.ytmusic-search-box {
+        border-radius: 0 0 20px 20px;
+        corner-shape: superellipse(2);
+      }
     }
 
-    /* Idle — no query has been typed */
-    &:not([has-query]) {
-      opacity: 0.7;
-      transition: opacity 0.2s var(--transition-curve);
+    &:not([opened]) {
+      & .search-container.ytmusic-search-box {
+        border-radius: 20px;
+        corner-shape: superellipse(2);
+      }
 
-      &:hover {
-        opacity: 1;
+      & #suggestion-list {
+        opacity: 0;
+      }
+
+      &:not([has-query]) {
+        opacity: 0.7;
+        transition: opacity 0.2s var(--transition-curve);
+
+        &:hover {
+          opacity: 1;
+        }
+
+        & .search-box.ytmusic-search-box {
+          background: var(--white-dot-10);
+          border-radius: 20px;
+          corner-shape: superellipse(2);
+        }
+      }
+    }
+
+    &[has-query] .search-container.ytmusic-search-box {
+      box-shadow: none;
+    }
+
+    &[opened]:not(:has(ytmusic-search-suggestions-section)) {
+      & #suggestion-list {
+        opacity: 0;
       }
 
       & .search-box.ytmusic-search-box {
-        background: var(--white-dot-10);
         border-radius: 20px;
         corner-shape: superellipse(2);
       }
     }
-  }
 
-  /* Query typed — remove container shadow */
-  &[has-query] .search-container.ytmusic-search-box {
-    box-shadow: none;
-  }
-
-  /* Expanded, suggestions not yet loaded */
-  &[opened]:not(:has(ytmusic-search-suggestions-section)) {
-    & #suggestion-list {
-      opacity: 0;
-    }
-
-    & .search-box.ytmusic-search-box {
-      border-radius: 20px;
+    &[opened]:has(ytmusic-search-suggestions-section) .search-box.ytmusic-search-box {
+      border-radius: 20px 20px 0 0;
       corner-shape: superellipse(2);
     }
   }
 
-  /* Expanded with suggestions — flat bottom edge */
-  &[opened]:has(ytmusic-search-suggestions-section) .search-box.ytmusic-search-box {
-    border-radius: 20px 20px 0 0;
-    corner-shape: superellipse(2);
+  &[opened] .search-container.ytmusic-search-box {
+    box-shadow: none;
   }
 }
 
-/* Remove shadow on any opened search box */
-ytmusic-search-box[opened] .search-container.ytmusic-search-box {
-  box-shadow: none;
-}
-
-/* Suggestion result text colour */
 ytmusic-search-suggestion {
   color: var(--white-dot-87);
 }
 
-/* Suggestion hover and selected states */
 #suggestions.ytmusic-search-suggestions-section
   > .ytmusic-search-suggestions-section:is(.hover, .selected-suggestion, :hover) {
   background-color: var(--white-dot-10);
@@ -816,7 +800,6 @@ ytmusic-popup-container #contentWrapper {
   pointer-events: auto !important;
 }
 
-/* Menu popup item hover */
 #items.ytmusic-menu-popup-renderer > .ytmusic-menu-popup-renderer:hover {
   background-color: var(--white-dot-10);
   box-shadow: inset 0 0 0px 1px var(--white-dot-10);
@@ -826,16 +809,18 @@ ytmusic-popup-container #contentWrapper {
 
 /* ## SECTION-19 - Player Queue Header ############ */
 ytmusic-queue-header-renderer {
-  border: 1.5px solid var(--white-dot-10);
-  border-top: none;
-  border-radius: 0px 0px 41.76px 41.76px;
+  box-sizing: border-box;
+  border-radius: 5cqi;
   corner-shape: superellipse(2);
   align-items: flex-start;
-  padding: 0px 16px 7px 12px;
-  margin: 0;
+  padding: 2.5cqi;
+  margin: 0 0cqi 2cqi;
   position: sticky;
-  top: 0;
+  top: 2cqi;
   z-index: 1000;
+  container-type: inline-size;
+  border: none;
+  box-shadow: 0px 4px 10px 0px oklch(0 0 0 / 0.2);
 
   &::before {
     content: "";
@@ -859,14 +844,34 @@ ytmusic-queue-header-renderer {
     opacity: 1;
   }
 
-  .container-name :is(.title, .subtitle) {
-    color: var(--white-dot-87);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    corner-shape: inherit;
+    border: none;
+    box-shadow: inset 0 0 0px 1px white;
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .container-name {
+    & .subtitle,
+    & .title {
+      color: var(--white-dot-87);
+    }
+
+    & .title {
+      font-weight: 100;
+    }
   }
 }
 
 ytmusic-chip-cloud-chip-renderer[chip-style="STYLE_TRANSPARENT"] {
   & a.ytmusic-chip-cloud-chip-renderer {
-    border-radius: 0px 0px 33.76px 33.76px;
+    border-radius: 2.5cqi;
     corner-shape: superellipse(2);
     background: var(--white-dot-60);
     padding: 6px;
@@ -882,17 +887,30 @@ ytmusic-chip-cloud-chip-renderer[chip-style="STYLE_TRANSPARENT"] {
   }
 }
 
-#tab-renderer
-  > div.style-scope.ytmusic-tab-renderer
-  > ytmusic-queue-header-renderer
-  > div.container-name.style-scope.ytmusic-queue-header-renderer
-  > yt-formatted-string.title.style-scope.ytmusic-queue-header-renderer {
-  padding-top: 8px;
-}
-
 #buttons > ytmusic-chip-cloud-chip-renderer > div > a > yt-icon {
   margin-left: 5px;
 }
+
+#tab-renderer {
+  &[page-type="MUSIC_PAGE_TYPE_TRACK_RELATED"] {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 8%);  
+  }
+
+  &:not([page-type="MUSIC_PAGE_TYPE_TRACK_RELATED"]):not(
+      [page-type="MUSIC_PAGE_TYPE_TRACK_LYRICS"]
+    ) {
+    margin-top: 0;
+  }
+}
+
+.scroller.ytmusic-player-page {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, oklch(1 0 0/0.2) 0.5cqi, black 2.5cqi);
+  mask-image: linear-gradient(to bottom, transparent 0, oklch(1 0 0/0.2) 0.5cqi, black 2.5cqi);
+  mask-attachment: scroll;
+  -webkit-mask-attachment: scroll;
+}
+
 /* ## SECTION-20 - Player Queue ################### */
 ytmusic-player-queue-item[play-button-state="loading"],
 ytmusic-player-queue-item[play-button-state="paused"],
@@ -1178,7 +1196,6 @@ tp-yt-paper-tab {
   }
 }
 
-/* border-radius always present, not just on hover */
 tp-yt-paper-tab .tab-content {
   border-radius: 999rem;
   corner-shape: superellipse(1.2);
@@ -1204,7 +1221,6 @@ tp-yt-paper-tab:not(.iron-selected) .tab-content:hover {
     opacity: 1;
   }
 
-  /* background on .tab-content, same as non-selected hover */
   & .tab-content {
     background-color: var(--white-dot-10);
     box-shadow: inset 0 0 0px 1px var(--white-dot-10);
@@ -1582,3 +1598,4 @@ ytmusic-player-bar[is-web-delhi-icons-enabled]
     opacity: 1;
   }
 }
+
